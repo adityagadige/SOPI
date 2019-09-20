@@ -1,0 +1,70 @@
+<%@page import="com.db.Connection.DbConnection"%>
+<%@page import="java.sql.*"%>
+
+
+	<%@include file="vheader.jsp"%>
+  <!-- column content -->
+  <div id="main-content">
+    <div class="container">
+      <div class="row">
+	
+	 <form action="ftender.jsp" method="post" >
+                     <table ><tr>
+                                     
+							
+							<%
+Connection con = null;
+    Statement st = null;
+    ResultSet rs = null;
+	String id=request.getParameter("id");
+	session.setAttribute("id",id);
+	
+	String aname=(String)session.getAttribute("aname");
+	try{
+	con = DbConnection.getConnection();
+							st = con.createStatement();
+							rs=st.executeQuery("select * from userproducts1 where id='"+id+"'");
+							while(rs.next()){
+%>
+<tr><td width="300px"><label>ID:</label></td><td> <input type="text" class="form-control form-control-lg" value="<%=rs.getInt(1)%>" style="width: 242px;" name="id" readonly required><br>
+
+</td></tr>
+<tr><td width="300px"><label>USER NAME: </label></td><td><input type="text" class="form-control form-control-lg" value="<%=rs.getString(2)%>" style="width: 242px;" name="uname" readonly required><br>
+</td></tr>
+<tr><td width="300px"><label>PRODUCT NAME: </label></td><td><input type="text" class="form-control form-control-lg" value="<%=rs.getString(3)%>" style="width: 242px;" name="pname" readonly required><br>
+</td></tr>
+<tr><td width="300px"><label>PRODUCT QUANTITY:</label></td><td> <input type="text" class="form-control form-control-lg" value="<%=rs.getString(4)%>" style="width: 242px;" name="pq" readonly required><br>
+</td></tr>
+<tr><td width="300px"><label>AMOUNT:</label></td><td> <input type="text" class="form-control form-control-lg" placeholder="Enter Quotation amount" style="width: 242px;" name="amt" required><br>
+</td></tr>
+</table>	
+<input type="submit" class="btn btn-lg btn-primary" style="margin-left: -500px;height: 37px;" value="Submit">
+
+</form>
+							<%	}
+	}
+
+catch (Exception ex) 
+				{
+					System.out.println(ex);
+                    response.sendRedirect("vendorhome.jsp?msggg='failed'");
+                }
+%>
+
+	
+	
+	 </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="wow bounceInRight">
+          
+        </div>
+        <div class="wow bounceInLeft">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end column content -->
+  <%@include file="footer.html"%>
